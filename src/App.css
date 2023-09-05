@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+/* 背景色を変える */
+body {
+  background-color: #b9a95d;
+}
