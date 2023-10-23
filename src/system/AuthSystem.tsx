@@ -12,6 +12,9 @@ export const AuthInfoContext = React.createContext<
     [AuthInfo, React.Dispatch<React.SetStateAction<AuthInfo>>]
 >([{ loggedIn: false, name: "" }, () => {}]);
 
+// TokenのContext
+export const TokenContext = React.createContext<string>("");
+
 
 export const AuthContextProvider: React.FC<PropsWithChildren<{}>> = (props) => {
     // stateの定義
@@ -30,30 +33,49 @@ export const AuthContextProvider: React.FC<PropsWithChildren<{}>> = (props) => {
     async function autoLogin() {
         const token = Cookies.get("token");
         if (token) {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/loginwithtoken`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    tokenString: token
-                })
-            });
-            if (response.ok) {
-                const data = await response.text();
-                setAuthInfo({
-                    loggedIn: true,
-                    name: data
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/login-with-token`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        tokenString: token
+                    })
                 });
-            } else {
-                console.log(response.text());
-                setAuthInfo({
-                    loggedIn: false,
-                    name: ""
-                })
-                Cookies.remove("token");
+                if (response.ok) {
+                    const data = await response.json();
+                    setAuthInfo({
+                        loggedIn: true,
+                        name: data.name
+                    });
+                } else {
+                    setAuthInfo({
+                        loggedIn: false,
+                        name: ""
+                    })
+                    Cookies.remove("token");
+                }
+            } catch (e) {
+
             }
+
         }
     }
 };
 
+export const TokenContextProvider: React.FC<PropsWithChildren<{}>> = (props) => {
+    // stateの定義
+    const [token, setToken] = useState<string>("");
+    useEffect(() => {
+        const token = Cookies.get("token");
+        if (token) {
+            setToken(token);
+        }
+    }, []);
+    return (
+        <TokenContext.Provider value={token}>
+            {props.children}
+        </TokenContext.Provider>
+    );
+}

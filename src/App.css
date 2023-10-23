@@ -41,3 +41,12 @@
 body {
   background-color: #b9a95d;
 }
+
+.article {
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
