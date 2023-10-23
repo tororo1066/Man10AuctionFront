@@ -45,14 +45,14 @@ const AuctionViewer: React.FC = () => {
                 })
                 setAuctionList(result);
 
-                // result.forEach((auction: any) => {
-                //     const parsedDisplayName = replaceColorCode(auction.itemInfo.displayName);
-                //     const element = document.getElementById(auction.id.toString());
-                //     console.log(element);
-                //     if (element) {
-                //         element.appendChild(parsedDisplayName);
-                //     }
-                // })
+                result.forEach((auction: any) => {
+                    const parsedDisplayName = replaceColorCode(auction.itemInfo.displayName);
+                    const element = document.getElementById(auction.id.toString());
+                    console.log(element);
+                    if (element) {
+                        element.appendChild(parsedDisplayName);
+                    }
+                })
             }
 
         }).catch();
