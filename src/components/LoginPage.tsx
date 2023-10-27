@@ -38,6 +38,7 @@ const LoginPage: React.FC = () => {
                     setAuthInfo({
                         loggedIn: true,
                         name: name,
+                        token: result
                     });
                     navigate('/');
                 } else {

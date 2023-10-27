@@ -88,7 +88,7 @@ function parseStyle(inputString: string) {
     let apply: string[] = [];
     let tmpStr: string;
     let indexDelta: number;
-    let final = document.createDocumentFragment();
+    let final = document.createElement("span")
     let len = codes.length;
 
     let string = inputString.replace(/\n|\\n/g, '<br>');
@@ -137,10 +137,6 @@ function clearObfuscators() {
 function replaceColorCodes(str: string) {
     clearObfuscators();
     return parseStyle(str.toString());
-}
-
-function cutString(str: string, cutStart: number, cutEnd: number) {
-    return str.substr(0, cutStart) + str.substr(cutEnd + 1);
 }
 
 export default replaceColorCodes;

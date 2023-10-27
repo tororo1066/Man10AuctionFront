@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 type AuthInfo = {
     loggedIn: boolean;
     name: string;
+    token?: string;
 };
 
 // 認証情報と認証情報セットのContext
@@ -47,12 +48,14 @@ export const AuthContextProvider: React.FC<PropsWithChildren<{}>> = (props) => {
                     const data = await response.json();
                     setAuthInfo({
                         loggedIn: true,
-                        name: data.name
+                        name: data.name,
+                        token: token
                     });
                 } else {
                     setAuthInfo({
                         loggedIn: false,
-                        name: ""
+                        name: "",
+                        token: undefined
                     })
                     Cookies.remove("token");
                 }
@@ -63,19 +66,3 @@ export const AuthContextProvider: React.FC<PropsWithChildren<{}>> = (props) => {
         }
     }
 };
-
-export const TokenContextProvider: React.FC<PropsWithChildren<{}>> = (props) => {
-    // stateの定義
-    const [token, setToken] = useState<string>("");
-    useEffect(() => {
-        const token = Cookies.get("token");
-        if (token) {
-            setToken(token);
-        }
-    }, []);
-    return (
-        <TokenContext.Provider value={token}>
-            {props.children}
-        </TokenContext.Provider>
-    );
-}

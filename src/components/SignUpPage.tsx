@@ -40,6 +40,7 @@ const SignUpPage: React.FC = () => {
                     setAuthInfo({
                         loggedIn: true,
                         name: name,
+                        token: e
                     });
                     navigate('/')
                 } else {
@@ -70,7 +71,6 @@ const SignUpPage: React.FC = () => {
                         type="number"
                         id="linkId"
                         name="linkId"
-                        value={formData.linkId}
                         onChange={handleInputChange}
                     />
                 </div>

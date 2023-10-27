@@ -7,7 +7,12 @@ interface LogoutButtonProps {
 }
 
 const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogoutClick }) => {
-    const [, setAuthInfo] = React.useContext(AuthInfoContext);
+    const [authInfo, setAuthInfo] = React.useContext(AuthInfoContext);
+
+    if (!authInfo.loggedIn) {
+        return null;
+    }
+
     return (
         <div
             style={{
